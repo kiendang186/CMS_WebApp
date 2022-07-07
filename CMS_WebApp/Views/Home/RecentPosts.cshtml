@@ -1,0 +1,55 @@
+﻿@using CMS_WebApp.Areas.ad.DTO
+@model List<CMS_WebApp.Areas.ad.DTO.PostDTO>
+@{ 
+    PostDTO lastPost = new PostDTO();
+    List<PostDTO> recentPosts = new List<PostDTO>();
+    if(Model != null)
+    {
+        if(Model.Count > 0)
+        {
+            lastPost = Model[0];
+
+            for(int i = 1; i < Model.Count; i++)
+            {
+                recentPosts.Add(Model[i]);
+            }
+        }
+    }
+}
+<div class="row recent-posts-content">
+    <div class="col-md-12 col-lg-6">
+        <!-- lastest post -->
+        <div class="lastest-post">
+            @if (lastPost != null)
+            {
+                <div class="img-lastest-post">
+                    <img src="@lastPost.ImagePath" alt="" class="img-fluid" />
+                </div>
+                <div class="lastest-post-info">
+                    <h4><a href="/bai-viet/@lastPost.MetaTitle-@lastPost.Id">@lastPost.Title</a></h4>
+                    <p>@lastPost.Excerpt</p>
+                </div>
+            }
+        </div> <!-- End lastest post -->
+        <div class="read-more">
+            <a href="/bai-viet/@lastPost.MetaTitle-@lastPost.Id">Xem chi tiết</a>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <!-- top recent posts -->
+        <div class="top-recent-posts">
+            @if (recentPosts.Count > 0)
+            {
+                foreach (var p in recentPosts)
+                {
+                    <div class="post-item clearfix">
+                        <img src="@p.ImagePath" alt="">
+                        <h4><a href="/bai-viet/@p.MetaTitle-@p.Id">@p.Title</a></h4>
+                        <time>@p.Date</time>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>

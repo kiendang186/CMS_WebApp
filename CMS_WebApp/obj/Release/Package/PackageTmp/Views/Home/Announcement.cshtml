@@ -1,0 +1,23 @@
+﻿@model List<CMS_WebApp.Areas.ad.DTO.PostDTO>
+
+<div id="announcement-box" class="box sidebar">
+    <h3 class="box-title">Thông báo</h3>
+    <div class="divider"></div>
+    <div class="anouncements">
+        <ul>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <li>
+                        <a href="/bai-viet/@item.MetaTitle-@item.Id">@item.Title</a>
+                        <p>@item.Date</p>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="read-more">
+        <a href="/the-loai/thong-bao-3">Xem tất cả</a>
+    </div>
+</div>

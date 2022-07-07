@@ -1,0 +1,63 @@
+﻿@model CMS_WebApp.Areas.ad.Models.ContactInfoModel
+
+@{
+    ViewBag.Title = "Cập nhật thông tin liên hệ | Trung tâm Thực hành - Thí nghiệm";
+    Layout = "~/Areas/ad/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Cập nhật thông tin liên hệ
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Cập nhật thông tin liên hệ</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                @using (Html.BeginForm("Contact", "Config", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="box-body">
+                        <p class="text-success">* Bắt buộc</p>
+                        <br />
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(mode => Model.Address, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(mode => Model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(mode => Model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary mr-3">Lưu thay đổi</button> &nbsp;
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-default">Trang chính</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Scripts/admins/notify.js"></script>
+    <script src="~/Scripts/admins/common_notify.js"></script>
+    @if (ViewBag.Success == true)
+    {
+        <script>showNofityMessage('Thông tin đã được cập nhật');</script>
+    }
+}
+

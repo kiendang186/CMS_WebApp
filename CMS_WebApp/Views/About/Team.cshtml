@@ -1,0 +1,78 @@
+﻿@model List<CMS_WebApp.Areas.ad.DTO.EmployeeDTO>
+@{
+    ViewBag.Title = "Cơ cấu Tổ chức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Cơ cấu Tổ chức</h2>
+                <ol>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li>Cơ cấu Tổ chức</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs -->
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+            @if (Model != null)
+            {
+                bool isNewRow = true;
+                int i = 0;
+                for (i = 0; i < Model.Count; i++)
+                {
+                    if (isNewRow)
+                    {
+                        @Html.Raw("<div class='row'>");
+                    }
+
+                    <div class="col-lg-3 aos-init aos-animate">
+                        @*<a href="/nhan-su/@Model[i].MetaTitle-@Model[i].Id" class="blog-item">
+                            <img src="@Model[i].ImagePath" alt="200x200" class="img-thumbnail">
+                            <strong>@Model[i].Title</strong>
+                            <p>
+                                <i class="bi bi-clock"></i> @Model[i].Date
+                            </p>
+                            <p>
+                                <i class="bi bi-person"></i> @Model[i].Author
+                            </p>
+                        </a>*@
+                        <a class="member" href="/co-cau-to-chuc/@Model[i].MetaTitle-@Model[i].Id">
+                          <div class="member-img">
+                            <img src="@Model[i].ImagePath" class="img-fluid" alt="">                            
+                          </div>
+                          <div class="member-info">
+                              <h4>@Model[i].Degree. @Model[i].FullName</h4>
+                              <span>@Model[i].Position</span>
+                          </div>
+                        </a>
+                    </div>
+
+                    if ((i + 1) % 4 == 0)
+                    {
+                        isNewRow = true;
+                        @Html.Raw("</div>");
+                    }
+                    else
+                    {
+                        isNewRow = false;
+                    }
+                }
+                if (i < 5)
+                {
+                    @Html.Raw("</div>");
+                }
+            }
+        </div>       
+    </section><!-- End Blog Section -->
+
+</main>
+

@@ -1,0 +1,16 @@
+﻿@model List<CMS_WebApp.Areas.ad.DTO.PostDTO>
+<ul>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <li>
+                <i class='bx bx-edit'></i>
+                <a href="/bai-viet/@item.MetaTitle-@item.Id">@item.Title</a>
+            </li>
+        }
+    }
+</ul>
+<div class="read-more">
+    <a href="/the-loai/van-ban-bieu-mau-5">Xem tất cả</a>
+</div>

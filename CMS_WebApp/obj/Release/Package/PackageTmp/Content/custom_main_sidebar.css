@@ -1,0 +1,21 @@
+﻿skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+    background-color: #03A9F4;
+}
+.skin-blue .sidebar-menu > li.header {
+    color: #fff;
+    background: #0d98e6;
+}
+
+.skin-blue .sidebar a {
+    color: #ffffff;
+}
+
+.skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
+    background-color: #0c9ce8;
+    color: #fff;
+    border-left-color: #fff
+}
+
+.text-success {
+    color: #05ff09 !important;
+}

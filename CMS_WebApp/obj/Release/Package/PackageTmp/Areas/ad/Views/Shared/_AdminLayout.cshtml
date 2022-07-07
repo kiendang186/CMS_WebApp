@@ -1,0 +1,201 @@
+﻿@using CMS_WebApp.Areas.ad.Common;
+@{
+    Layout = null;
+}
+
+@{
+    var user = Session["activeUser"] as CMS_WebApp.Areas.ad.Models.User;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hệ thống Quản lý Nội dung - Trung tâm Thực hành - Thí nghiệm</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--Styles-->
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/gallery.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="/ad" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">CPE</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">Hệ thống <b>CMS</b></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                @if (user != null)
+                {
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <!-- Tasks: style can be found in dropdown.less -->
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="@user.ProfileImage" class="user-image" alt="User Image">
+                                    <span class="hidden-xs">@user.Fullname</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        <img src="@user.ProfileImage" class="img-circle" alt="User Image">
+
+                                        <p>
+                                            @user.Fullname
+                                            <small>@user.Username</small>
+                                        </p>
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="/ad/profile" class="btn btn-default btn-flat">Hồ sơ</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="/ad/log-out" class="btn btn-default btn-flat">Đăng xuất</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </nav>
+        </header>
+
+        <!-- =============================================== -->
+        <!-- Left side column. contains the sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">               
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <!--CONTENT MANAGEMENT-->
+                    <li class="header">QUẢN LÝ NỘI DUNG</li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "Category")"><i class="fa fa-th-list" aria-hidden="true"></i> <span>Thể loại bài viết</span></a>
+                    </li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "Post")"><i class="fa fa-file-text" aria-hidden="true"></i><span>Bài viết</span> </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "Featured")"><i class="fa fa-star" aria-hidden="true"></i><span>Thông tin nổi bật</span> </a>
+                    </li>
+                    <!--./CONTENT MANAGEMENT-->
+                    <!--CALENDAR MANAGEMENT-->
+                    <li class="header">QUẢN LÝ LỊCH</li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "Location")">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><span>Địa điểm</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "Room")">
+                            <i class="fa fa-cube" aria-hidden="true"></i><span>Phòng TT-TH</span>
+                        </a>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "Calendar")">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>Đăng ký lịch</span>
+                        </a>
+                    </li>
+                    @if (user != null)
+                    {
+                        if (user.Role.Code.Equals(Constant.ADMIN))
+                        {
+                            <!--USER ROLE MANAGEMENT-->
+                            <li class="header">QUẢN LÝ NGƯỜI DÙNG</li>
+                            <li class="treeview">
+                                <a href="@Url.Action("Index", "User")">
+                                    <i class="fa fa-users"></i>
+                                    <span>Người dùng</span>
+                                </a>
+                            </li>
+
+                            <li class="treeview">
+                                <a href="@Url.Action("AddUser", "User")">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                    <span>Thêm người dùng</span>
+                                </a>
+                            </li>
+
+                            <!--MENU MANAGEMENT-->
+                            <li class="header">Cấu hình Hệ thống</li>
+                            <li class="treeview">
+                                <a href="@Url.Action("Index", "Menu")">
+                                    <i class="fa fa-fw fa-navicon"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </li>
+
+                            <!--HOME LAYOUT MANAGEMENT-->
+                            <li class="treeview">
+                                <a href="@Url.Action("Layout", "Config")">
+                                    <i class="fa fa-fw fa-bank"></i>
+                                    <span>Cấu hình Trang chủ</span>
+                                </a>
+                            </li>
+
+                            <!--CONTACT INFO -->
+                            <li class="treeview">
+                                <a href="@Url.Action("Contact", "Config")">
+                                    <i class="fa fa-fw fa-info-circle"></i>
+                                    <span>Thông tin liên hệ</span>
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- =============================================== -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0.0
+            </div>
+            <strong>Copyright &copy; 2021.</strong> All rights
+            reserved.
+        </footer>
+
+    </div>
+    <!-- ./wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

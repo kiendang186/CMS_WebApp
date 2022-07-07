@@ -1,0 +1,12 @@
+﻿@model List<CMS_WebApp.Areas.ad.Models.MenuModel>
+
+<ul>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {                
+            <li><i class="bx bx-chevron-right"></i> <a href="@item.URL">@item.Title</a></li>
+        }
+    }
+</ul>
+   

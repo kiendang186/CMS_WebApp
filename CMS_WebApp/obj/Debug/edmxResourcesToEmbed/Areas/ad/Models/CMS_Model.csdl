@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CPEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__EFMigrationsHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeatureInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Enable" Type="Boolean" />
+    <Property Name="AuthorId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="User" Relationship="CPEModel.FK_FeatureInfo_User" FromRole="FeatureInfo" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Rooms" Relationship="CPEModel.FK_Room_Location" FromRole="Location" ToRole="Room" />
+  </EntityType>
+  <EntityType Name="MenuRole">
+    <Key>
+      <PropertyRef Name="MenusId" />
+      <PropertyRef Name="RolesId" />
+    </Key>
+    <Property Name="MenusId" Type="Int32" Nullable="false" />
+    <Property Name="RolesId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Descripiton" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="CPEModel.FK_User_Role" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="LocationId" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Location" Relationship="CPEModel.FK_Room_Location" FromRole="Room" ToRole="Location" />
+    <NavigationProperty Name="Events" Relationship="CPEModel.FK_Event_Room_RoomId" FromRole="Room" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityContainer Name="CMS_Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
+    <EntitySet Name="FeatureInfoes" EntityType="Self.FeatureInfo" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="MenuRoles" EntityType="Self.MenuRole" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Rooms" EntityType="Self.Room" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Room_Location" Association="CPEModel.FK_Room_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Room" EntitySet="Rooms" />
+    </AssociationSet>
+    <EntitySet Name="Events" EntityType="CPEModel.Event" />
+    <AssociationSet Name="FK_Event_Room_RoomId" Association="CPEModel.FK_Event_Room_RoomId">
+      <End Role="Room" EntitySet="Rooms" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <EntitySet Name="Menus" EntityType="CPEModel.Menu" />
+    <EntitySet Name="Categories" EntityType="CPEModel.Category" />
+    <EntitySet Name="Posts" EntityType="CPEModel.Post" />
+    <AssociationSet Name="FK_Post_Category_CategoryId" Association="CPEModel.FK_Post_Category_CategoryId">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="CPEModel.User" />
+    <AssociationSet Name="FK_Event_User" Association="CPEModel.FK_Event_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeatureInfo_User" Association="CPEModel.FK_FeatureInfo_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="FeatureInfo" EntitySet="FeatureInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Post_User" Association="CPEModel.FK_Post_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="CPEModel.FK_User_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="HomeConfigs" EntityType="CPEModel.HomeConfig" />
+    <EntitySet Name="ContactInfoes" EntityType="CPEModel.ContactInfo" />
+    <EntitySet Name="Employees" EntityType="CPEModel.Employee" />
+    <EntitySet Name="ExLinks" EntityType="CPEModel.ExLink" />
+    <EntitySet Name="Galleries" EntityType="CPEModel.Gallery" />
+    <EntitySet Name="GalleryItems" EntityType="CPEModel.GalleryItem" />
+    <EntitySet Name="SchoolYears" EntityType="CPEModel.SchoolYear" />
+    <EntitySet Name="ScoreReviews" EntityType="CPEModel.ScoreReview" />
+    <EntitySet Name="ScoreReviewProfiles" EntityType="CPEModel.ScoreReviewProfile" />
+    <AssociationSet Name="FK_Gallery_User" Association="CPEModel.FK_Gallery_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Gallery" EntitySet="Galleries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GalleryItems_Gallery" Association="CPEModel.FK_GalleryItems_Gallery">
+      <End Role="Gallery" EntitySet="Galleries" />
+      <End Role="GalleryItem" EntitySet="GalleryItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScoreReviewProfile_SchoolYear" Association="CPEModel.FK_ScoreReviewProfile_SchoolYear">
+      <End Role="SchoolYear" EntitySet="SchoolYears" />
+      <End Role="ScoreReviewProfile" EntitySet="ScoreReviewProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScoreReview_ScoreReviewProfile" Association="CPEModel.FK_ScoreReview_ScoreReviewProfile">
+      <End Role="ScoreReviewProfile" EntitySet="ScoreReviewProfiles" />
+      <End Role="ScoreReview" EntitySet="ScoreReviews" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Room_Location">
+    <End Type="CPEModel.Location" Role="Location" Multiplicity="0..1" />
+    <End Type="CPEModel.Room" Role="Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Start" Type="DateTime" Precision="3" />
+    <Property Name="End" Type="DateTime" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="RoomId" Type="Int32" Nullable="false" />
+    <Property Name="ThemeColor" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IsFullDay" Type="Boolean" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Room" Relationship="CPEModel.FK_Event_Room_RoomId" FromRole="Event" ToRole="Room" />
+    <NavigationProperty Name="User" Relationship="CPEModel.FK_Event_User" FromRole="Event" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Event_Room_RoomId">
+    <End Type="CPEModel.Room" Role="Room" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CPEModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Parent" Type="Int32" />
+    <Property Name="IsShow" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Persistent" Type="Boolean" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Posts" Relationship="CPEModel.FK_Post_Category_CategoryId" FromRole="Category" ToRole="Post" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Excerpt" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Enable" Type="Boolean" />
+    <Property Name="ThumnailImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="AuthorId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MetaTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Category" Relationship="CPEModel.FK_Post_Category_CategoryId" FromRole="Post" ToRole="Category" />
+    <NavigationProperty Name="User" Relationship="CPEModel.FK_Post_User" FromRole="Post" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Post_Category_CategoryId">
+    <End Type="CPEModel.Category" Role="Category" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CPEModel.Post" Role="Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Fullname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Byte" />
+    <Property Name="IsActived" Type="Boolean" />
+    <Property Name="LastLogin" Type="DateTime" Precision="3" />
+    <Property Name="LastLogout" Type="DateTime" Precision="3" />
+    <Property Name="ProfileImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ResetCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="WrongTimes" Type="Int32" />
+    <NavigationProperty Name="Events" Relationship="CPEModel.FK_Event_User" FromRole="User" ToRole="Event" />
+    <NavigationProperty Name="FeatureInfoes" Relationship="CPEModel.FK_FeatureInfo_User" FromRole="User" ToRole="FeatureInfo" />
+    <NavigationProperty Name="Posts" Relationship="CPEModel.FK_Post_User" FromRole="User" ToRole="Post" />
+    <NavigationProperty Name="Role" Relationship="CPEModel.FK_User_Role" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="Galleries" Relationship="CPEModel.FK_Gallery_User" FromRole="User" ToRole="Gallery" />
+  </EntityType>
+  <Association Name="FK_Event_User">
+    <End Type="CPEModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CPEModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeatureInfo_User">
+    <End Type="CPEModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CPEModel.FeatureInfo" Role="FeatureInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="FeatureInfo">
+        <PropertyRef Name="AuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Post_User">
+    <End Type="CPEModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CPEModel.Post" Role="Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="AuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Type="CPEModel.Role" Role="Role" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CPEModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HomeConfig">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ViewName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="Int32" />
+    <Property Name="Items" Type="Int32" />
+    <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ContactInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MapEmbbed" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POB" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Biography" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Order" Type="Int32" />
+    <Property Name="ImagePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="MetaTitle" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ExLink">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Text" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Group" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Gallery">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="ThumbnaiImage" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="CPEModel.FK_Gallery_User" FromRole="Gallery" ToRole="User" />
+    <NavigationProperty Name="GalleryItems" Relationship="CPEModel.FK_GalleryItems_Gallery" FromRole="Gallery" ToRole="GalleryItem" />
+  </EntityType>
+  <EntityType Name="GalleryItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="GalleryId" Type="Int32" />
+    <NavigationProperty Name="Gallery" Relationship="CPEModel.FK_GalleryItems_Gallery" FromRole="GalleryItem" ToRole="Gallery" />
+  </EntityType>
+  <EntityType Name="SchoolYear">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="YearRange" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ScoreReviewProfiles" Relationship="CPEModel.FK_ScoreReviewProfile_SchoolYear" FromRole="SchoolYear" ToRole="ScoreReviewProfile" />
+  </EntityType>
+  <EntityType Name="ScoreReview">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Fullname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ClassId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StudentDept" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CourseId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CourseName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ReviewDept" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="InitialScore" Type="Double" />
+    <Property Name="RevisedScore" Type="Double" />
+    <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProfileId" Type="Int32" />
+    <NavigationProperty Name="ScoreReviewProfile" Relationship="CPEModel.FK_ScoreReview_ScoreReviewProfile" FromRole="ScoreReview" ToRole="ScoreReviewProfile" />
+  </EntityType>
+  <EntityType Name="ScoreReviewProfile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Semester" Type="Byte" />
+    <Property Name="SchoolYear" Type="Int32" />
+    <NavigationProperty Name="SchoolYear1" Relationship="CPEModel.FK_ScoreReviewProfile_SchoolYear" FromRole="ScoreReviewProfile" ToRole="SchoolYear" />
+    <NavigationProperty Name="ScoreReviews" Relationship="CPEModel.FK_ScoreReview_ScoreReviewProfile" FromRole="ScoreReviewProfile" ToRole="ScoreReview" />
+  </EntityType>
+  <Association Name="FK_Gallery_User">
+    <End Type="CPEModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CPEModel.Gallery" Role="Gallery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Gallery">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GalleryItems_Gallery">
+    <End Type="CPEModel.Gallery" Role="Gallery" Multiplicity="0..1" />
+    <End Type="CPEModel.GalleryItem" Role="GalleryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gallery">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GalleryItem">
+        <PropertyRef Name="GalleryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScoreReviewProfile_SchoolYear">
+    <End Type="CPEModel.SchoolYear" Role="SchoolYear" Multiplicity="0..1" />
+    <End Type="CPEModel.ScoreReviewProfile" Role="ScoreReviewProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SchoolYear">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ScoreReviewProfile">
+        <PropertyRef Name="SchoolYear" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScoreReview_ScoreReviewProfile">
+    <End Type="CPEModel.ScoreReviewProfile" Role="ScoreReviewProfile" Multiplicity="0..1" />
+    <End Type="CPEModel.ScoreReview" Role="ScoreReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScoreReviewProfile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ScoreReview">
+        <PropertyRef Name="ProfileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

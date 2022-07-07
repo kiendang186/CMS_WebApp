@@ -1,0 +1,148 @@
+﻿@using CMS_WebApp.Areas.ad.DTO
+
+@{
+    ViewBag.Title = "Trang chính | Trung tâm Thực hành - Thí nghiệm";
+    Layout = "~/Areas/ad/Views/Shared/_AdminLayout.cshtml";
+
+    List<PostDTO> postDTOs = (List<PostDTO>)ViewBag.RecentPosts;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Bảng điều khiển
+    </h1>    
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>@ViewBag.NumOfCategories</h3>
+                    <p>Thể loại bài viết</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-th-list"></i>
+                </div>
+                <a href="/ad/category" class="small-box-footer">Xem tất cả <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>@ViewBag.NumOfPosts</h3>
+                    <p>Bài viết</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-file-text"></i>
+                </div>
+                <a href="/ad/post" class="small-box-footer">Xem tất cả <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>@ViewBag.NumOfFeatureds</h3>
+                    <p>Tin nổi bật</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-star"></i>
+                </div>
+                <a href="/ad/featured" class="small-box-footer">Xem tất cả <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>@ViewBag.NumOfRooms</h3>
+                    <p>Phòng Thí nghiệm - Thực hành</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-cube"></i>
+                </div>
+                <a href="/ad/room" class="small-box-footer">Xem tất cả <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Lịch tuần</h3>
+                </div>
+                <div class="box-body">
+                    <div id="calendar"></div>
+                </div>
+                <div class="box-footer text-center">
+                    <a href="/ad/calendar" class="uppercase">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bài viết cập nhật gần đây</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        @if (postDTOs != null)
+                        {
+                            foreach (var post in postDTOs)
+                            {
+                                <li class="item">
+                                    <div class="product-img">
+                                        <img src="@post.ImagePath" alt="Ảnh bài viết">
+                                    </div>
+                                    <div class="product-info">
+                                        <a href="/post/@post.Id" target="_blank" class="product-title">
+                                            @post.Title
+                                        </a>
+                                        <span class="product-description">
+                                            Đăng bởi: @post.Author - Ngày: @post.Date
+                                        </span>
+                                    </div>
+                                </li>
+                                <!-- /.item -->
+                            }
+                        }
+                        else
+                        {
+                            <li class="item">Chưa có bài viết</li>
+                        }
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="/ad/post" class="uppercase">Xem tất cả</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+    </div>
+
+</section>
+<link href="~/Content/calendar/fullcalendar.min.css" rel="stylesheet" />
+<link href="~/Content/calendar/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="~/Content/calendar/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="~/Content/calendar/moment.min.js"></script>
+    <script src="~/Content/calendar/fullcalendar.min.js"></script>
+    <script src="~/Content/calendar/bootstrap-datetimepicker.min.js"></script>   
+    <script src="~/Scripts/admins/calendar_data.js"></script>
+}
+
+

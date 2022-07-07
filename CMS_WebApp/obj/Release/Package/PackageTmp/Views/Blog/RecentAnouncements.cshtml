@@ -1,0 +1,27 @@
+﻿@model List<CMS_WebApp.Areas.ad.DTO.PostDTO>
+
+<div class="widget widget-latest-post">
+    <div class="widget-title">
+        <h3>Thông báo</h3>
+    </div>
+    <div class="widget-body">
+        @foreach (var item in Model)
+        {
+            <div class="latest-post-aside media">
+                <div class="lpa-left media-body">
+                    <div class="lpa-title">
+                        <h5><a href="/bai-viet/@item.MetaTitle-@item.Id">@item.Title</a></h5>
+                    </div>
+                    <div class="lpa-meta">
+                        <a class="name" href="#">
+                            @item.Author
+                        </a>
+                        <a class="date" href="#">
+                            @item.Date
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }        
+    </div>
+</div>

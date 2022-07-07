@@ -1,0 +1,55 @@
+﻿@model CMS_WebApp.Areas.ad.Models.MenuModel
+
+@{
+    ViewBag.Title = "Cập nhật menu | Trung tâm Thực hành - Thí nghiệm";
+    Layout = "~/Areas/ad/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Cập nhật menu
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard"></i> Bảng điều khiển</a></li>
+        <li><a href="@Url.Action("Index","Menu")"><i class="fa fa-dashboard"></i> Menu</a></li>
+        <li class="active">Cập nhật menu</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                @using (Html.BeginForm("EditMenu", "Menu", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                <div class="box-body">
+                    <p class="text-success">* Bắt buộc</p>
+                    <br />
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(mode => Model.Title, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsShow)<br />
+                        @Html.CheckBoxFor(model => model.IsShow, new { @class = "checkbox" })
+                        @Html.ValidationMessageFor(model => model.IsShow, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.URL, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(mode => Model.URL, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary mr-3">Cập nhật</button> &nbsp;&nbsp;&nbsp;
+                        <a href="@Url.Action("Index", "Menu")" class="btn btn-default">Trở lại danh sách</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

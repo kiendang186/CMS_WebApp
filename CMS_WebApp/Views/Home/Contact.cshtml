@@ -1,0 +1,77 @@
+﻿@model CMS_WebApp.Areas.ad.Models.ContactInfo
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2></h2>
+                <ol>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li>Liên hệ</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs -->
+    <!-- ======= Contact Title  ======= -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Liên hệ</h2>
+                <p>Bên dưới là thông tin liên lạc của Trung tâm Thực hành - Thí nghiệm</p>
+            </div>
+        </div>
+    </section><!-- End Contact Title -->
+    <!-- ======= Contact Section ======= -->
+
+    <section id="contact" class="contact">
+        <div class="container">
+
+            <div class="row justify-content-center" data-aos="fade-up">
+
+                <div class="col-lg-10">
+
+                    <div class="info-wrap">
+                        <div class="row">
+                            <div class="col-lg-4 info">
+                                <i class="bi bi-geo-alt"></i>
+                                <h4>Địa chỉ:</h4>
+                                <p>@Model.Address</p>
+                            </div>
+
+                            <div class="col-lg-4 info mt-4 mt-lg-0">
+                                <i class="bi bi-envelope"></i>
+                                <h4>Email:</h4>
+                                <p>@Model.Email/p>
+                            </div>
+
+                            <div class="col-lg-4 info mt-4 mt-lg-0">
+                                <i class="bi bi-phone"></i>
+                                <h4>Điện thoại:</h4>
+                                <p>@Model.Phone</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                <div class="col-lg-10">
+                    <div class="map-section">
+                        @Html.Raw(Model.MapEmbbed)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
